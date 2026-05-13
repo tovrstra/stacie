@@ -175,7 +175,7 @@ The discrete sampling PSD, rescaled with STACIE's conventions, becomes:
 
 $$
   I_k \approx \hat{I}_k
-    = \frac{Fh}{2N} \sum_{m=1}^M
+    = \frac{Fh}{2 N M} \sum_{m=1}^M
       \left|\hat{X}_k^{(m)}\right|^2
 $$
 
