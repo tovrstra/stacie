@@ -65,7 +65,7 @@ The following notation is used throughout STACIE's documentation.
 
 ## Fourier Transform
 
-(This only concerns the continues time and frequency domain.)
+(This only concerns the continuous time and frequency domain.)
 
 - $X(f) = \mathcal{F}[x](f)$ is the Fourier transform of a function $x(t)$,
   where $f$ is the ordinary frequency.

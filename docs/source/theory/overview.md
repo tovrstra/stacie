@@ -143,7 +143,7 @@ $$
 $$
 
 In STACIE, we always work with a rescaled version of the PSD,
-including the factor $Fh / 2$:
+including the factor $F / 2$:
 
 $$
   I_k = \frac{F}{2} C_k

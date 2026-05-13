@@ -227,7 +227,7 @@ Spectra are often computed by averaging them over $M$ sequences to reduce the va
 In this case, the $M$-averaged empirical spectrum is distributed as:
 
 $$
-    \hat{C}_k=\frac{h}{NM}\sum_{s=1}^M|\hat{X}^s_0|^2
+    \hat{C}_k=\frac{h}{NM}\sum_{s=1}^M|\hat{X}_k^{(s)}|^2
     \sim \gdist(\textstyle\frac{\nu_k}{2},\textstyle\frac{2}{\nu_k}C_k)
 $$
 
