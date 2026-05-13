@@ -16,11 +16,10 @@ from sphinx.ext.apidoc import main as main_api_doc
 
 def _get_version_info():
     """Get the version as defined in pyproject.toml"""
-    from setuptools_scm import Configuration
-    from setuptools_scm._get_version_impl import _get_version
+    from setuptools_scm import get_version
 
-    config = Configuration.from_file("../../pyproject.toml", "./")
-    verinfo = Version(_get_version(config, force_write_version_files=False))
+    scm_version = get_version(root="../..", relative_to=__file__)
+    verinfo = Version(scm_version)
     major_minor = f"{verinfo.major}.{verinfo.minor}"
     return major_minor, major_minor
 

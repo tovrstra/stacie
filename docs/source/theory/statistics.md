@@ -98,21 +98,23 @@ Again, we make use of the freedom to insert a time average when computing a mean
 Note that this derivation assumes $\mean[\hat{x}_n]=0$ to keep the notation bearable.
 
 $$
-    C_k = \mathcal{F}[\mathbf{c}]_k
-    &= \sum_{\Delta=0}^{N-1} \omega^{-k\Delta} \mean\left[
+    C_k = h\mathcal{F}[\mathbf{c}]_k
+    &= h\sum_{\Delta=0}^{N-1} \omega^{-k\Delta} \mean\left[
         \frac{1}{N}
         \sum_{n=0}^{N-1}\hat{x}_n\, \hat{x}_{n+\Delta}
     \right]
     \\
-    &= \frac{1}{N} \mean\left[
+    &= \frac{h}{N} \mean\left[
         \sum_{n=0}^{N-1}\omega^{kn}\hat{x}_n\,
         \sum_{\Delta=0}^{N-1}\omega^{-k\Delta-kn} \hat{x}_{n+\Delta}
     \right]
     \\
-    &= \frac{1}{N} \mean\Bigl[|\hat{X}_k|^2\Bigr]
+    &= \frac{h}{N} \mean\Bigl[|\hat{X}_k|^2\Bigr]
 $$
 
 This is the discrete version of the Wiener--Khinchin theorem {cite:p}`oppenheim_1999_power`.
+Note that the factor $h$ is included in the definition of $C_k$
+to ensure that its units are consistent with the continuous case.
 
 By combining the previous two results,
 we can write the covariance of the Fourier transform of the input sequence as:
@@ -120,7 +122,7 @@ we can write the covariance of the Fourier transform of the input sequence as:
 $$
     \cov[\hat{X}^*_k \,,\, \hat{X}_\ell]
     = \delta_{k,\ell} \mean\Bigl[|\hat{X}_k|^2\Bigr]
-    = N \delta_{k,\ell} C_k
+    = \frac{N \delta_{k,\ell}}{h} C_k
 $$
 
 For the real component of $\hat{X}_k$ $(=\hat{X}^*_{-k})$, we find:
@@ -144,8 +146,8 @@ $$
     \Bigr)
     \\
     &= \begin{cases}
-        N C_0 & \text{if } k=0 \\
-        \frac{N}{2} C_k & \text{if } 0<k<N
+        \frac{N}{h} C_0 & \text{if } k=0 \\
+        \frac{N}{2h} C_k & \text{if } 0<k<N
     \end{cases}
 $$
 
@@ -164,7 +166,7 @@ $$
     \\
     &= \begin{cases}
         0 & \text{if } k=0 \\
-        \frac{N}{2} C_k & \text{if } 0<k<N
+        \frac{N}{2h} C_k & \text{if } 0<k<N
     \end{cases}
 $$
 
@@ -203,14 +205,14 @@ For notational consistency, we will use the
 with shape parameter $\alpha$ and scale parameter $\theta$:
 
 $$
-    \hat{C}_0=\frac{1}{N}|\hat{X}_0|^2
+    \hat{C}_0=\frac{h}{N}|\hat{X}_0|^2
     &\sim \gdist(\textstyle\frac{1}{2},2C_0)
     \\
-    \hat{C}_{N/2}=\frac{1}{N}|\hat{X}_{N/2}|^2
+    \hat{C}_{N/2}=\frac{h}{N}|\hat{X}_{N/2}|^2
     &\sim \gdist(\textstyle\frac{1}{2},2C_{N/2})
     \quad \text{if $N$ is even}
     \\
-    \hat{C}_k=\frac{1}{N}|\hat{X}_k|^2
+    \hat{C}_k=\frac{h}{N}|\hat{X}_k|^2
     &\sim \gdist(1,C_k)
     \quad \text{for } 0<k<N \text { and } k \neq N/2
 $$
@@ -225,7 +227,7 @@ Spectra are often computed by averaging them over $M$ sequences to reduce the va
 In this case, the $M$-averaged empirical spectrum is distributed as:
 
 $$
-    \hat{C}_k=\frac{1}{NM}\sum_{s=1}^M|\hat{X}^s_0|^2
+    \hat{C}_k=\frac{h}{NM}\sum_{s=1}^M|\hat{X}^s_0|^2
     \sim \gdist(\textstyle\frac{\nu_k}{2},\textstyle\frac{2}{\nu_k}C_k)
 $$
 
@@ -243,7 +245,7 @@ The rescaled spectrum used in STACIE, $\hat{I}_k$, has the same distribution,
 except for the scale parameter:
 
 $$
-    \hat{I}_k = \frac{F h}{2} \hat{C}_k
+    \hat{I}_k = \frac{F}{2} \hat{C}_k
     \sim \gdist(\textstyle\frac{\nu_k}{2},\textstyle\frac{2}{\nu_k}I_k)
 $$
 
@@ -285,14 +287,14 @@ with parameter vector $\mathbf{b}$ becomes:
 
 $$
     \ln\mathcal{L}(\mathbf{b})
-    &=\sum_{k\in K} w(f_k|f_\text{cut}) \ln p_{\gdist(\alpha_k,\theta_k)}(\hat{C}_k)
+    &=\sum_{k\in K} w(f_k|f_\text{cut}) \ln p_{\gdist(\alpha_k,\theta_k)}(\hat{I}_k)
     \\
     &=\sum_{k\in K}
         w(f_k|f_\text{cut}) \left[
             -\ln \Gamma(\alpha_k)
             - \ln\bigl(\theta_k(\mathbf{b})\bigr)
-            + (\alpha_k - 1)\ln\left(\frac{\hat{C}_k}{\theta_k(\mathbf{b})}\right)
-            - \frac{\hat{C}_k}{\theta_k(\mathbf{b})}
+            + (\alpha_k - 1)\ln\left(\frac{\hat{I}_k}{\theta_k(\mathbf{b})}\right)
+            - \frac{\hat{I}_k}{\theta_k(\mathbf{b})}
         \right]
 $$
 
@@ -404,10 +406,10 @@ $$
     \mean\left[\hat{\operatorname{cost}}(\mathbf{b})\right]
     = \sum_{k\in K}
         w(f_k|f_\text{cut})
-        \mean\left[-\ln p_{\gdist(\alpha_k,\theta_k)}(\hat{C}_k)\right]
+        \mean\left[-\ln p_{\gdist(\alpha_k,\theta_k)}(\hat{I}_k)\right]
 $$
 
-where the mean is computed by sampling $\hat{C}_k$ from the distribution
+where the mean is computed by sampling $\hat{I}_k$ from the distribution
 $\gdist(\alpha_k,\theta_k)$.
 This mean is also known as the entropy of the distribution,
 with a well-known closed-form solution.
@@ -433,28 +435,28 @@ $$
     \var\left[\hat{\operatorname{cost}}(\mathbf{b})\right]
     = \sum_{k\in K}
         w(f_k|f_\text{cut})^2
-        \var\left[-\ln p_{\gdist(\alpha_k,\theta_k)}(\hat{C}_k)\right]
+        \var\left[-\ln p_{\gdist(\alpha_k,\theta_k)}(\hat{I}_k)\right]
 $$
 
 The variance of the cost function is also defined as an expectation value
-over $\hat{C}_k$ from the distribution $\gdist(\alpha_k,\theta_k)$.
+over $\hat{I}_k$ from the distribution $\gdist(\alpha_k,\theta_k)$.
 This variance can also be derived analytically, but the result is not as well-known,
 so we will work it out here.
-The logarithm of the probability density has only two terms that depend on the random variable $\hat{C}_k$,
+The logarithm of the probability density has only two terms that depend on the random variable $\hat{I}_k$,
 which are relevant for the variance:
 
 $$
     \begin{aligned}
-        &\hspace{-1em}\var\left[-\ln p_{\gdist(\alpha_k,\theta_k)}(\hat{C}_k)\right]
+        &\hspace{-1em}\var\left[-\ln p_{\gdist(\alpha_k,\theta_k)}(\hat{I}_k)\right]
         \\
         &= \var\left[
-            (\alpha_k - 1)\ln(\hat{C}_k)
-            - \frac{\hat{C}_k}{\theta_k(\mathbf{b})}
+            (\alpha_k - 1)\ln(\hat{I}_k)
+            - \frac{\hat{I}_k}{\theta_k(\mathbf{b})}
         \right]
         \\
-        &= (\alpha_k - 1)^2 \var\left[\ln(\hat{C}_k)\right]
-            + \frac{1}{\theta_k^2(\mathbf{b})} \var\left[\hat{C}_k\right]
-            - 2\frac{\alpha_k - 1}{\theta_k(\mathbf{b})} \cov\left[\ln(\hat{C}_k),\hat{C}_k\right]
+        &= (\alpha_k - 1)^2 \var\left[\ln(\hat{I}_k)\right]
+            + \frac{1}{\theta_k^2(\mathbf{b})} \var\left[\hat{I}_k\right]
+            - 2\frac{\alpha_k - 1}{\theta_k(\mathbf{b})} \cov\left[\ln(\hat{I}_k),\hat{I}_k\right]
     \end{aligned}
 $$
 
@@ -464,9 +466,9 @@ respectively.
 
 $$
     \begin{aligned}
-        \var\left[\ln(\hat{C}_k)\right] &= \psi_1(\alpha_k)
+        \var\left[\ln(\hat{I}_k)\right] &= \psi_1(\alpha_k)
         \\
-        \var\left[\hat{C}_k\right] &= \alpha_k\, \theta_k^2(\mathbf{b})
+        \var\left[\hat{I}_k\right] &= \alpha_k\, \theta_k^2(\mathbf{b})
     \end{aligned}
 $$
 
@@ -474,9 +476,9 @@ where $\psi_1(\alpha)$ is the [trigamma](https://en.wikipedia.org/wiki/Trigamma_
 The only term that requires some more work is the third term:
 
 $$
-    \cov\left[\ln(\hat{C}_k),\hat{C}_k\right]
-    = \mean\left[\ln(\hat{C}_k)\,\hat{C}_k\right]
-      - \mean\left[\ln(\hat{C}_k)\right]\,\mean\left[\hat{C}_k\right]
+    \cov\left[\ln(\hat{I}_k),\hat{I}_k\right]
+    = \mean\left[\ln(\hat{I}_k)\,\hat{I}_k\right]
+      - \mean\left[\ln(\hat{I}_k)\right]\,\mean\left[\hat{I}_k\right]
 $$
 
 A [derivation of the first term](https://statproofbook.github.io/P/gam-xlogx) can be found in the
@@ -486,14 +488,14 @@ The results are:
 
 $$
     \begin{aligned}
-        \mean\left[\ln(\hat{C}_k)\,\hat{C}_k\right]
+        \mean\left[\ln(\hat{I}_k)\,\hat{I}_k\right]
         &= \alpha_k\,\theta_k(\mathbf{b})
            \Bigl(\psi(\alpha_k+1) + \ln\bigl(\theta_k(\mathbf{b})\bigr)\Bigr)
         \\
-        \mean\left[\ln(\hat{C}_k)\right]
+        \mean\left[\ln(\hat{I}_k)\right]
         &= \psi(\alpha_k) + \ln\bigl(\theta_k(\mathbf{b})\bigr)
         \\
-        \mean\left[\hat{C}_k\right]
+        \mean\left[\hat{I}_k\right]
         &= \alpha_k\, \theta_k(\mathbf{b})
     \end{aligned}
 $$
@@ -503,7 +505,7 @@ The covariance can now be worked out by making using of the
 
 $$
     \begin{aligned}
-        \cov\left[\ln(\hat{C}_k),\hat{C}_k\right]
+        \cov\left[\ln(\hat{I}_k),\hat{I}_k\right]
         &= \alpha_k\,\theta_k(\mathbf{b})
            \bigl(\psi(\alpha_k+1) - \psi(\alpha_k)\bigr)
         \\
@@ -515,11 +517,11 @@ Putting it all together,
 we find the variance of the logarithm of the probability density of the Gamma distribution:
 
 $$
-    \var\left[-\ln p_{\gdist(\alpha_k,\theta_k)}(\hat{C}_k)\right]
+    \var\left[-\ln p_{\gdist(\alpha_k,\theta_k)}(\hat{I}_k)\right]
     = (\alpha_k - 1)^2 \psi_1(\alpha_k) - \alpha_k + 2
 $$
 
-The standard devation in the Z-score finally becomes:
+The standard deviation in the Z-score finally becomes:
 
 $$
     \std\left[\hat{\operatorname{cost}}(\mathbf{b})\right]

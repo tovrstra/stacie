@@ -123,15 +123,17 @@ The covariance is an expected value over all $n$ and all possible realizations o
 Let $C_k$ be the discrete Fourier transform of the autocorrelation function:
 
 $$
-C_k = \sum_{\Delta=0}^{N-1} c_\Delta \omega^{-k\Delta}
+C_k = h \sum_{\Delta=0}^{N-1} c_\Delta \omega^{-k\Delta}
 $$
 
 with $\omega = \exp(i 2\pi/N)$.
+Note that the factor $h$ is included in the definition of $C_k$
+to ensure that its units are consistent with the continuous case.
 According to (the discrete version of) the [Wiener--Khinchin theorem](statistics.md) {cite:p}`oppenheim_1999_power`,
 this Fourier transform can be written in terms of the discrete PSD:
 
 $$
-C_k = \frac{1}{N}\mean \left[\left|\hat{X}_k\right|^2\right]
+C_k = \frac{h}{N}\mean \left[\left|\hat{X}_k\right|^2\right]
 $$
 
 with
@@ -144,7 +146,7 @@ In STACIE, we always work with a rescaled version of the PSD,
 including the factor $Fh / 2$:
 
 $$
-  I_k = \frac{Fh}{2} C_k
+  I_k = \frac{F}{2} C_k
 $$
 
 In this notation, the autocorrelation integral is simply
