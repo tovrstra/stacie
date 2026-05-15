@@ -4,8 +4,9 @@ The following notation is used throughout STACIE's documentation.
 
 ## Special Functions
 
-- $\Gamma(z)$ is the Gamma function.
-- $\gamma(z, x)$ is the lower incomplete Gamma function.
+- $\Gamma(z)$ is the [Gamma function](https://en.wikipedia.org/wiki/Gamma_function).
+- $\gamma(z, x)$ is the [lower incomplete Gamma function](https://en.wikipedia.org/wiki/Incomplete_gamma_function).
+- $\psi(\alpha)$ is the [digamma function](https://en.wikipedia.org/wiki/Digamma_function).
 
 ## Statistics
 
