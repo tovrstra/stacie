@@ -1,11 +1,13 @@
-# Notation
+# Notation and Conventions
 
 The following notation is used throughout STACIE's documentation.
 
-## Special functions
+## Special Functions
 
-- $\Gamma(z)$ is the Gamma function.
-- $\gamma(z, x)$ is the lower incomplete Gamma function.
+- $\Gamma(z)$ is the [Gamma function](https://en.wikipedia.org/wiki/Gamma_function).
+- $\gamma(z, x)$ is the [lower incomplete Gamma function](https://en.wikipedia.org/wiki/Incomplete_gamma_function).
+- $\psi(z)$ is the [digamma function](https://en.wikipedia.org/wiki/Digamma_function).
+- $\psi_1(z)$ is the [trigamma function](https://en.wikipedia.org/wiki/Trigamma_function).
 
 ## Statistics
 
@@ -63,11 +65,29 @@ The following notation is used throughout STACIE's documentation.
         = p_{\gdist(\nu/2,2)} (x)
     $$
 
+## Fourier Transform
+
+(This only concerns the continuous time and frequency domain.)
+
+- $X(f) = \mathcal{F}[x](f)$ is the Fourier transform of a function $x(t)$,
+  where $f$ is the ordinary frequency.
+  The following definition is employed throughout:
+
+  $$
+    X(f) = \int_{-\infty}^\infty x(t) e^{-i 2\pi f t} \mathrm{d}t
+  $$
+
 ## Discrete Fourier Transform
 
 - $x_n$ is an element of a real periodic sequence $\mathbf{x}$ with period $N$.
 - $\mathbf{X} = \mathcal{F}[\mathbf{x}]$ is the discrete Fourier transform of the sequence,
   complex and periodic with period $N$.
+  The following definition is employed, unless otherwise specified:
+
+  $$
+    X_k = \sum_{n=0}^{N-1} x_n e^{-i 2\pi k n / N}
+  $$
+
 - When $M$ samples of the sequence are considered, they are denoted as $\mathbf{x}^{(m)}$
   with elements $x^{(m)}_n$.
   Their discrete Fourier transforms are $\mathbf{X}^{(m)}$ with elements $X^{(m)}_k$.

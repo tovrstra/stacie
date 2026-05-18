@@ -2,7 +2,8 @@
 
 When data exhibits time correlations,
 the error of the average cannot be computed by assuming that all data are statistically independent.
-Because of time correlations, there are fewer independent values than the number of elements in the data.
+Because of time correlations,
+there are fewer independent values than the number of elements in the data.
 
 Quantifying the {term}`uncertainty` of averages over time-correlated data is discussed
 in several textbooks, e.g.,
