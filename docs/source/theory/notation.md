@@ -6,7 +6,7 @@ The following notation is used throughout STACIE's documentation.
 
 - $\Gamma(z)$ is the [Gamma function](https://en.wikipedia.org/wiki/Gamma_function).
 - $\gamma(z, x)$ is the [lower incomplete Gamma function](https://en.wikipedia.org/wiki/Incomplete_gamma_function).
-- $\psi(\alpha)$ is the [digamma function](https://en.wikipedia.org/wiki/Digamma_function).
+- $\psi(z)$ is the [digamma function](https://en.wikipedia.org/wiki/Digamma_function).
 
 ## Statistics
 
