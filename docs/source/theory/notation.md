@@ -7,7 +7,7 @@ The following notation is used throughout STACIE's documentation.
 - $\Gamma(z)$ is the [Gamma function](https://en.wikipedia.org/wiki/Gamma_function).
 - $\gamma(z, x)$ is the [lower incomplete Gamma function](https://en.wikipedia.org/wiki/Incomplete_gamma_function).
 - $\psi(z)$ is the [digamma function](https://en.wikipedia.org/wiki/Digamma_function).
-
+- $\psi_1(z)$ is the [trigamma function](https://en.wikipedia.org/wiki/Trigamma_function).
 ## Statistics
 
 - Several symbols are used to denote time:
