@@ -29,11 +29,11 @@ repos:
     - id: remove-crlf
       exclude_types: [binary]
 - repo: https://github.com/python-jsonschema/check-jsonschema
-  rev: 0.37.2
+  rev: 0.37.4
   hooks:
     - id: check-github-workflows
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.15.12
+  rev: v0.15.20
   hooks:
     - id: ruff-format
     - id: ruff-check
@@ -44,7 +44,7 @@ repos:
     - id: nb-clean
       args: ["--remove-empty-cells", "--preserve-cell-metadata", "tags", "--"]
 - repo: https://github.com/DavidAnson/markdownlint-cli2
-  rev: v0.22.1
+  rev: v0.23.0
   hooks:
     - id: markdownlint-cli2
       exclude: '^test'
