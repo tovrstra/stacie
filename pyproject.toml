@@ -63,8 +63,8 @@ docs = [
     "sphinx-tippy",
     "sphinxcontrib-bibtex",
     "sphinxcontrib-svg2pdfconverter",
-    "stepup>=3.1.2",
-    "stepup-reprep>=3.1.5",
+    "stepup>=4.0.0rc7; python_version>='3.11'",
+    "stepup-reprep>=4.0.0rc3; python_version>='3.11'",
 ]
 tests = [
     "pytest",
@@ -72,6 +72,7 @@ tests = [
     "pytest-xdist",
     "numdifftools",
 ]
+dev = ["pre-commit"]
 
 [project.urls]
 Documentation = "https://molmod.github.io/stacie/"

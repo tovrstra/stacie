@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from runlammps import runlammps
-from stepup.core.api import mkdir, render_jinja, static
+from stepup.core.api import render_jinja, static
 
 
 def plan_extension(ireplica: int, part: int, additional_steps: int):
@@ -17,7 +17,6 @@ def plan_extension(ireplica: int, part: int, additional_steps: int):
         Number of additional steps to run in this extension.
     """
     name = f"sims/replica_{ireplica:04d}_part_{part:02d}"
-    mkdir(f"{name}/")
     render_jinja(
         "template-ext.lammps",
         {
@@ -33,12 +32,10 @@ def plan_extension(ireplica: int, part: int, additional_steps: int):
 
 
 static("runlammps.py", "template-init.lammps", "template-ext.lammps")
-mkdir("sims/")
 nreplica = 100
 for ireplica in range(nreplica):
     # Initial production run
     name_i = f"sims/replica_{ireplica:04d}_part_00"
-    mkdir(f"{name_i}/")
     render_jinja("template-init.lammps", {"seed": ireplica + 1}, f"{name_i}/in.lammps")
     runlammps(f"{name_i}/")
 

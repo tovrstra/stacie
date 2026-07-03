@@ -2,27 +2,40 @@
 
 ## Repository, Tests and Documentation Build
 
-It is assumed that you have previously installed Python, Git, pre-commit and direnv.
+It is assumed that you have previously installed
+[Python](https://www.python.org/),
+[uv](https://docs.astral.sh/uv/),
+[Git](https://git-scm.com/),
+[pre-commit](https://pre-commit.com/) and
+[direnv](https://direnv.net/).
 A local installation for testing and development can be installed as follows:
 
 ```bash
 git clone git@github.com:molmod/stacie.git
 cd stacie
+uv sync --extra docs,tests,dev
 pre-commit install
-python -m venv venv
-echo 'source venv/bin/activate' > .envrc
+echo 'source .venv/bin/activate' > .envrc
 direnv allow
-pip install -U pip
-pip install -e .[docs,tests]
+```
+
+Tests are implemented with [pytest](https://docs.pytest.org/).
+Run them as follows:
+
+```bash
 pytest -vv
+```
+
+Documentation is built with [Sphinx](https://www.sphinx-doc.org/).
+Rebuild the documentation as follows:
+
+```bash
 cd docs
 ./compile_html.sh
 ./compile_pdf.sh
 ```
 
 ## Documentation Live Preview
-
-The documentation is created using [Sphinx](https://www.sphinx-doc.org/).
 
 Edit the documentation Markdown files with a live preview
 by running the following command *in the root* of the repository:

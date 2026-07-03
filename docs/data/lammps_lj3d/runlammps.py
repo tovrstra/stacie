@@ -6,19 +6,19 @@ option.
 """
 
 import argparse
-import subprocess
 
 from path import Path
-from stepup.core.api import amend, runpy
+from stepup.core.api import amend, run
+from stepup.core.extapi import run_subprocess
 
 __all__ = ("runlammps",)
 
 
 def runlammps(workdir: str, inp: list[str] = ()):
     workdir = Path(workdir)
-    runpy(
+    run(
         f"./runlammps.py {workdir}",
-        inp=["runlammps.py", workdir / "in.lammps", *inp],
+        inp=[workdir / "in.lammps", *inp],
         out=[workdir / "log.txt"],
     )
 
@@ -29,11 +29,15 @@ def main(argv: list[str] | None = None):
     for file in args.rundir.files():
         if file.name != "in.lammps":
             file.remove()
-    subprocess.run(
-        ["lmp", "-i", "in.lammps", "-l", "log.txt", "-sc", "none"],
-        cwd=args.rundir,
-        check=True,
+    run_subprocess(
+        "lmp -i in.lammps -l log.txt -sc none",
+        workdir=args.rundir,
     )
+    # This goes against good practices: ideally amend should come before run_subprocess.
+    # However, LAMMPS output files are not known in advance in general.
+    # This depends on the details of the input file.
+    # Here, we take the lazy approach of amending all files
+    # that are not the input file or the log file.
     extra_out = [path for path in args.rundir.files() if path.name not in ["in.lammps", "log.txt"]]
     amend(out=extra_out)
 

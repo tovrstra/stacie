@@ -8,4 +8,4 @@
 cd ../../../../../
 . activate
 cd ${SLURM_SUBMIT_DIR}
-time stepup boot -n ${SLURM_CPUS_PER_TASK}
+time sb -j ${SLURM_CPUS_PER_TASK}

@@ -10,4 +10,4 @@ cd ../../../../../
 cd ${SLURM_SUBMIT_DIR}
 export OPENMM_CPU_THREADS=1
 # export OPENMM_DEFAULT_PLATFORM=CPU
-time stepup boot -n ${SLURM_CPUS_PER_TASK}
+time sb -j ${SLURM_CPUS_PER_TASK}
